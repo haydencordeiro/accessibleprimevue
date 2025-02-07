@@ -1,10 +1,9 @@
 {
     "name": "primevue",
-    "version": "3.53.1",
-    "homepage": "https://primevue.org/",
+    "version": "3.53.4",
     "repository": {
         "type": "git",
-        "url": "https://github.com/primefaces/primevue.git"
+        "url": "https://github.com/haydencordeiro/accessibleprimevue"
     },
     "license": "MIT",
     "scripts": {
