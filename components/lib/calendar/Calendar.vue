@@ -2604,7 +2604,7 @@ export default {
                                 let spanIndex = null;
 
                                 for (let i = 0; i < focusableElements.length; i++) {
-                                    if (focusableElements[i].tagName === 'SPAN') spanIndex = i;
+                                    if (focusableElements[i].tagName === 'SPAN' || focusableElements[i].tagName === 'BUTTON') spanIndex = i;
                                 }
 
                                 focusableElements[spanIndex].focus();
