@@ -6,7 +6,7 @@
 [![PrimeVue Hero](https://www.primefaces.org/static/social/primevue-preview.jpg)](https://primevue.org/)
 
 # PrimeVue
-
+Note: This is the forked version of the Primefaces/PrimeVue repository. Since V3 has reached its EOL this is use to fix identified accessibility bugs in the v3 version of primevue
 PrimeVue is a rich set of open source UI Components for Vue. See [PrimeVue v3 homepage](https://v3.primevue.org/) for live showcase and documentation.
 
 ## Download
