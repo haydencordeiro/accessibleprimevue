@@ -256,8 +256,8 @@
                                 v-for="(m, i) of monthPickerValues"
                                 :key="m"
                                 v-ripple
-                                @click="onMonthSelect($event, i)"
-                                @keydown="onMonthCellKeydown($event, { month: m, index: i })"
+                                @click="m?.selectable ? onMonthSelect($event, i): null"
+                                @keydown=" onMonthCellKeydown($event, { month: m, index: i })"
                                 :class="cx('month', { month: m, index: i })"
                                 v-bind="
                                     ptm('month', {
@@ -283,7 +283,7 @@
                                 v-for="y of yearPickerValues"
                                 :key="y.value"
                                 v-ripple
-                                @click="onYearSelect($event, y)"
+                                @click="y?.selectable ? onYearSelect($event, y) : null"
                                 @keydown="onYearCellKeydown($event, y)"
                                 :class="cx('year', { year: y })"
                                 v-bind="
@@ -2387,7 +2387,7 @@ export default {
                 case 'NumpadEnter':
 
                 case 'Space': {
-                    this.onMonthSelect(event, index);
+                    if(index?.month?.selectable) this.onMonthSelect(event, index);
                     event.preventDefault();
                     break;
                 }
@@ -2481,7 +2481,7 @@ export default {
                 case 'NumpadEnter':
 
                 case 'Space': {
-                    this.onYearSelect(event, index);
+                    if(index?.selectable) this.onYearSelect(event, index);
                     event.preventDefault();
                     break;
                 }
@@ -2577,7 +2577,9 @@ export default {
                 cell.tabIndex = '0';
 
                 if (!this.inline && (!this.navigationState || !this.navigationState.button) && !this.timePickerChange) {
-                    if (!this.manualInput) cell.focus();
+                    // if (!this.manualInput) 
+                    
+                    cell.focus();
                 }
 
                 this.preventFocus = false;
