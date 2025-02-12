@@ -544,6 +544,7 @@ export default {
     timePickerTimer: null,
     preventFocus: false,
     typeUpdate: false,
+    hasOpened: false,
     data() {
         return {
             d_id: this.id,
@@ -891,6 +892,7 @@ export default {
             this.unbindOutsideClickListener();
             this.unbindScrollListener();
             this.unbindResizeListener();
+            this.hasOpened = false;
             this.$emit('hide');
 
             if (this.mask) {
@@ -2578,8 +2580,13 @@ export default {
 
                 if (!this.inline && (!this.navigationState || !this.navigationState.button) && !this.timePickerChange) {
                     // if (!this.manualInput) 
-                    
-                    cell.focus();
+                    if(!this.hasOpened){
+                        this.hasOpened = true;
+                    }
+                    else{
+
+                        cell.focus();
+                    }
                 }
 
                 this.preventFocus = false;
