@@ -1693,6 +1693,7 @@ export default {
                 this.onDateSelect(event, { year: this.currentYear, month: index, day: 1, selectable: true });
             } else {
                 this.currentMonth = index?.index ?? index;
+                console.log(this.currentMonth)
                 this.currentView = 'date';
                 this.$emit('month-change', { month: this.currentMonth + 1, year: this.currentYear });
             }
