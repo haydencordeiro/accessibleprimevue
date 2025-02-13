@@ -199,7 +199,7 @@
                                                 <td
                                                     v-for="date of week"
                                                     :key="date.day + '' + date.month"
-                                                    :aria-label="date.day"
+                                                    :aria-label="!date.selectable ? date.day + ' disabled' : date.day"
                                                     :class="cx('day', { date })"
                                                     v-bind="
                                                         ptm('day', {
@@ -259,6 +259,7 @@
                                 @click="m?.selectable ? onMonthSelect($event, i): null"
                                 @keydown=" onMonthCellKeydown($event, { month: m, index: i })"
                                 :class="cx('month', { month: m, index: i })"
+                                
                                 v-bind="
                                     ptm('month', {
                                         context: {
@@ -269,6 +270,7 @@
                                         }
                                     })
                                 "
+                                :aria-label="!m.selectable ? m.value + ' disabled' : m.value"
                                 :data-p-disabled="!m.selectable"
                                 :data-p-highlight="isMonthSelected(i)"
                             >
@@ -295,6 +297,7 @@
                                         }
                                     })
                                 "
+                                :aria-label="!y.selectable ? y.value + ' disabled' : y.value"
                                 :data-p-disabled="!y.selectable"
                                 :data-p-highlight="isYearSelected(y.value)"
                             >
