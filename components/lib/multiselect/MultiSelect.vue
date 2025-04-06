@@ -14,6 +14,7 @@
                 :aria-labelledbpreparey="ariaLabelledby"
                 aria-haspopup="listbox"
                 :aria-expanded="overlayVisible"
+                aria-required="true"
                 :aria-controls="id + '_list'"
                 :aria-activedescendant="focused ? focusedOptionId : undefined"
                 :aria-invalid="invalid || undefined"
@@ -61,7 +62,7 @@
                         role="presentation"
                         aria-hidden="true"
                         class="p-hidden-accessible p-hidden-focusable"
-                        :tabindex="0"
+                        :tabindex="-1"
                         @focus="onFirstHiddenFocus"
                         v-bind="ptm('hiddenFirstFocusableEl')"
                         :data-p-hidden-accessible="true"
@@ -78,6 +79,7 @@
                             :aria-label="toggleAllAriaLabel"
                             @change="onToggleAll"
                             :unstyled="unstyled"
+                            ariaLabel="Select all items checkbox"
                             :pt="getHeaderCheckboxPTOptions('headerCheckbox')"
                         >
                             <template #icon="slotProps">
@@ -98,6 +100,7 @@
                                 autocomplete="off"
                                 :aria-owns="id + '_list'"
                                 :aria-activedescendant="focusedOptionId"
+                                :ariaLabel="this.placeholder?.replace(/Select|select|Search|search/g, 'Filter')"
                                 @keydown="onFilterKeyDown"
                                 @blur="onFilterBlur"
                                 @input="onFilterChange"
@@ -117,7 +120,7 @@
                         </button>
                     </div>
                     <div :class="cx('wrapper')" :style="{ 'max-height': virtualScrollerDisabled ? scrollHeight : '' }" v-bind="ptm('wrapper')">
-                        <VirtualScroller :ref="virtualScrollerRef" v-bind="virtualScrollerOptions" :items="visibleOptions" :style="{ height: scrollHeight }" :tabindex="-1" :disabled="virtualScrollerDisabled" :pt="ptm('virtualScroller')">
+                        <VirtualScroller :ref="virtualScrollerRef" v-bind="virtualScrollerOptions" :items="visibleOptions" :style="{ height: scrollHeight }" role="region" :tabindex="-1" :disabled="virtualScrollerDisabled" :pt="ptm('virtualScroller')">
                             <template v-slot:content="{ styleClass, contentRef, items, getItemOptions, contentStyle, itemSize }">
                                 <ul :ref="(el) => listRef(el, contentRef)" :id="id + '_list'" :class="[cx('list'), styleClass]" :style="contentStyle" role="listbox" aria-multiselectable="true" :aria-label="listAriaLabel" v-bind="ptm('list')">
                                     <template v-for="(option, i) of items" :key="getOptionRenderKey(option, getOptionIndex(i, getItemOptions))">
@@ -143,7 +146,7 @@
                                             :data-p-focused="focusedOptionIndex === getOptionIndex(i, getItemOptions)"
                                             :data-p-disabled="isOptionDisabled(option)"
                                         >
-                                            <Checkbox :modelValue="isSelected(option)" :binary="true" :tabindex="-1" :variant="variant" :unstyled="unstyled" :pt="getCheckboxPTOptions(option, getItemOptions, i, 'itemCheckbox')">
+                                            <Checkbox aria-hidden="true" :modelValue="isSelected(option)" :binary="true" :tabindex="-1" :variant="variant" :unstyled="unstyled" :pt="getCheckboxPTOptions(option, getItemOptions, i, 'itemCheckbox')">
                                                 <template #icon="slotProps">
                                                     <component v-if="$slots.itemcheckboxicon" :is="$slots.itemcheckboxicon" :checked="slotProps.checked" :class="slotProps.class" />
                                                     <component
@@ -184,7 +187,7 @@
                         role="presentation"
                         aria-hidden="true"
                         class="p-hidden-accessible p-hidden-focusable"
-                        :tabindex="0"
+                        :tabindex="-1"
                         @focus="onLastHiddenFocus"
                         v-bind="ptm('hiddenLastFocusableEl')"
                         :data-p-hidden-accessible="true"
@@ -686,7 +689,8 @@ export default {
                     event.preventDefault();
                 } else {
                     if (this.focusedOptionIndex !== -1) {
-                        this.onOptionSelect(event, this.visibleOptions[this.focusedOptionIndex]);
+                        // Prevent Selection or deselection of Option on tab
+                        // this.onOptionSelect(event, this.visibleOptions[this.focusedOptionIndex]);
                     }
 
                     this.overlayVisible && this.hide(this.filter);
