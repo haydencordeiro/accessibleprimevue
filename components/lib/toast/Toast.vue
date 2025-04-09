@@ -72,8 +72,10 @@ export default {
             this.messages = [...this.messages, message];
         },
         remove(params) {
-            const index = this.messages.findIndex((m) => m.id === params.message.id);
-
+            let index = this.messages.findIndex((m) => m.id === params.message?.id);
+            if(index == -1) {
+                index = this.messages.findIndex((m) => m.summary === params.message.summary && m.detail === params.message.detail);
+            }
             if (index !== -1) {
                 this.messages.splice(index, 1);
                 this.$emit(params.type, { message: params.message });
