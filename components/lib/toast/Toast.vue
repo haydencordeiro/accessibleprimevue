@@ -65,6 +65,12 @@ export default {
     },
     methods: {
         add(message) {
+            if(message.preventDuplicate === true){
+                const index = this.messages.findIndex((m) => m.summary === message.summary && m.detail === message.detail);
+                if(index !== -1) {
+                    return;
+                }
+            }
             if (message.id == null) {
                 message.id = messageIdx++;
             }
